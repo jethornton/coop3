@@ -1,0 +1,24 @@
+#!/usr/bin/python3
+
+import sys, time
+from datetime import datetime, timedelta, timezone
+from PyQt5.QtWidgets import QApplication
+from rpi_utilities import ledfade
+
+class main():
+	def __init__(self):
+		super().__init__()
+
+		self.sunrise = ledfade(start=0, end=30, action='sunrise')
+		self.sunset = ledfade(start=0, end=30, action='sunset')
+		i = 0
+		while i < 31:
+			print(f'Sunrise PWM {self.sunrise.update(i)} Sunset PWM {self.sunset.update(i)}')
+			i += 1
+			time.sleep(1)
+		quit()
+
+if __name__ == '__main__':
+	app = QApplication(sys.argv)
+	gui = main()
+	sys.exit(app.exec_())
