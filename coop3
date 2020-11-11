@@ -145,6 +145,7 @@ class main(QMainWindow):
 			self.statusbar.showMessage('Door is Open')
 			self.doorStatus = 'open'
 			self.upProxLbl.setText(self.doorState[self.upProx])
+			self.downProx = self.downProxState.current()
 			self.downProxLbl.setText(self.doorState[self.downProx])
 
 		# check to see if the door up relay needs to be off
@@ -178,6 +179,7 @@ class main(QMainWindow):
 			self.statusbar.showMessage('Door is Closed')
 			self.doorStatus = 'closed'
 			self.downProxLbl.setText(self.doorState[self.downProx])
+			self.upProx = self.upProxState.current()
 			self.upProxLbl.setText(self.doorState[self.upProx])
 
 		if self.doorStatus in self.closeList:
