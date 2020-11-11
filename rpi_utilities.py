@@ -12,25 +12,6 @@ except:
 	e = sys.exc_info()[0]
 	print(f'error is {e}')
 
-
-"""
-Call the update function to find out if the pin has changed
-
-To import the library
-from rpi_utilities import debounce
-
-In your __init__ function
-self.somePinName = debounce(pin=UP_PROX, delay=0.001)
-self.somePinState = 0
-
-In your fast running thread
-self.somePinState = self.somePinName.update()
-if self.somePinState != None:
-	print(f'Some Pine Value is {self.somePinState}')
-"""
-
-
-
 class debounce():
 	def __init__(self, *args, **kwargs):
 		if 'pin' in kwargs:
