@@ -1,0 +1,52 @@
+#!/usr/bin/python3
+
+"""
+Dependencies
+sudo apt install python3-pyqt5
+sudo apt install python3-rpi.gpio
+"""
+
+import sys, time
+from datetime import datetime, timedelta, timezone
+from PyQt5.QtWidgets import QApplication
+from rpi_utilities import ledfade
+import RPi.GPIO as gpio
+
+class main():
+	def __init__(self):
+		super().__init__()
+
+		# setup BCM pin GPIO17 which is physical pin 11
+		gpio.setmode(gpio.BCM)
+		gpio.setwarnings(False)
+		gpio.setup(17, gpio.OUT)
+		self.pwm = gpio.PWM(17, 100)
+		# start the pwm output
+		self.pwm.start(0)
+		self.sunrise = ledfade(start=0, end=30, action='sunrise')
+		self.sunset = ledfade(start=30, end=0, action='sunset')
+		i = 0
+		# sunrise
+		while i < 30:
+			i += 1
+			correctedPWM = self.sunrise.update(i)
+			print(f'Raw PWM {i} Sunrise PWM {correctedPWM}')
+			self.pwm.ChangeDutyCycle(correctedPWM)
+			time.sleep(1)
+
+		# sunset
+		while i > 0:
+			i -= 1
+			correctedPWM = self.sunset.update(i)
+			print(f'Raw PWM {i} Sunset PWM {correctedPWM}')
+			self.pwm.ChangeDutyCycle(correctedPWM)
+			time.sleep(1)
+
+		self.pwm.stop()
+
+		quit()
+
+if __name__ == '__main__':
+	app = QApplication(sys.argv)
+	gui = main()
+	sys.exit(app.exec_())

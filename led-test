@@ -2,51 +2,28 @@
 
 """
 Dependencies
-sudo apt install python3-pyqt5
 sudo apt install python3-rpi.gpio
+
 """
+import time
+import RPi.GPIO as GPIO
 
-import sys, time
-from datetime import datetime, timedelta, timezone
-from PyQt5.QtWidgets import QApplication
-from rpi_utilities import ledfade
-import RPi.GPIO as gpio
+# setup BCM pin GPIO17 which is physical pin 11
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(17, GPIO.OUT)
+pwm = GPIO.PWM(17, 100)
 
-class main():
-	def __init__(self):
-		super().__init__()
+# start the pwm output
+pwm.start(0)
 
-		# setup BCM pin GPIO17 which is physical pin 11
-		gpio.setmode(gpio.BCM)
-		gpio.setwarnings(False)
-		gpio.setup(17, gpio.OUT)
-		self.pwm = gpio.PWM(17, 100)
-		# start the pwm output
-		self.pwm.start(0)
-		self.sunrise = ledfade(start=0, end=30, action='sunrise')
-		self.sunset = ledfade(start=30, end=0, action='sunset')
-		i = 0
-		# sunrise
-		while i < 30:
-			i += 1
-			correctedPWM = self.sunrise.update(i)
-			print(f'Raw PWM {i} Sunrise PWM {correctedPWM}')
-			self.pwm.ChangeDutyCycle(correctedPWM)
-			time.sleep(1)
+# step through the brightness levels 0 - 100 then exit
+count = 0
+while count < 100:
+	# increment count by 1
+	count += 1
+	pwm.ChangeDutyCycle(count)
+	time.sleep(1)
 
-		# sunset
-		while i > 0:
-			i -= 1
-			correctedPWM = self.sunset.update(i)
-			print(f'Raw PWM {i} Sunset PWM {correctedPWM}')
-			self.pwm.ChangeDutyCycle(correctedPWM)
-			time.sleep(1)
-
-		self.pwm.stop()
-
-		quit()
-
-if __name__ == '__main__':
-	app = QApplication(sys.argv)
-	gui = main()
-	sys.exit(app.exec_())
+# end the pwm
+pwm.stop()
