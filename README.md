@@ -11,9 +11,12 @@ properties.
 Additional notes are in the coop3 file.
 
 LED is driven with a mosfet driver connected to the Raspberry Pi.
-I used the following items
+I used the following items:
+
 [Mosfet Driver](https://www.amazon.com/gp/product/B07GLNCRR4)
+
 [6500K LED](https://www.ledsupply.com/leds/12v-led-light-nichia-757)
+
 [Mean Well Power Supply](https://www.ledsupply.com/power-supplies/mean-well-lpf-series-constant-voltage-constant-current-output)
 
 led-test is a simple test to see if you have the led wired up correctly to the
