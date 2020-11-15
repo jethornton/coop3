@@ -12,6 +12,7 @@ sudo apt install python3-pyqt5
 sudo apt install python3-rpi.gpio
 sudo apt install python3-pip
 sudo pip3 install astral
+sudo apt install wiringpi
 
 Click on your chicken coop in google maps to get the latitude and longitude
 

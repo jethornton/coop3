@@ -57,7 +57,11 @@ class ledfade():
 		self.transit = self.end - self.start
 
 	def ledpwm(self, p):
-		return int(0.181+(0.0482*p)+(0.00323*p*p)+(0.0000629*p*p*p))
+		c = 0.181+(0.0482*p)+(0.00323*p*p)+(0.0000629*p*p*p)
+		if c <= 100.0:
+			return c
+		elif c > 100.0:
+			return 100
 
 	def update(self, now):
 		if self.action == 'sunrise':
