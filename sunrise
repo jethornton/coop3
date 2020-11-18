@@ -1,0 +1,81 @@
+#!/usr/bin/python3
+
+"""
+Dependencies
+sudo apt install python3-pyqt5
+sudo apt install python3-rpi.gpio
+"""
+
+import sys
+sys.dont_write_bytecode = True
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname("__file__"), '..')))
+import time
+from datetime import datetime, timedelta, timezone
+import pytz
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QTimer
+print(sys.path)
+#sys.path.append(os.getcwd())
+#print(sys.path)
+#from utilities import ledfade
+import utilities
+#import RPi.GPIO as gpio
+
+#print(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+#print(os.getcwd())
+
+class main():
+	def __init__(self):
+		super().__init__()
+
+		"""
+		# setup BCM pin GPIO17 which is physical pin 11
+		gpio.setmode(gpio.BCM)
+		gpio.setwarnings(False)
+		gpio.setup(17, gpio.OUT)
+		self.pwm = gpio.PWM(17, 100)
+		"""
+		"""
+		# setup the update timer
+		updateTimer = QTimer()
+		updateTimer.timeout.connect(self.update)
+		updateTimer.start(100)
+
+		# initialize the sunrise event
+		PBTZ = pytz.timezone('US/Central')
+		start = datetime.now(PBTZ)
+		end = start + timedelta(minutes=30)
+		#self.pwm.start(0)
+		self.sunrise = ledfade(start=0, end=30, action='sunrise')
+		self.sunset = ledfade(start=30, end=0, action='sunset')
+
+		i = 0
+		# sunrise
+		while i < 30:
+			i += 1
+			correctedPWM = self.sunrise.update(i)
+			print(f'Raw PWM {i} Sunrise PWM {correctedPWM}')
+			self.pwm.ChangeDutyCycle(correctedPWM)
+			time.sleep(1)
+
+		# sunset
+		while i > 0:
+			i -= 1
+			correctedPWM = self.sunset.update(i)
+			print(f'Raw PWM {i} Sunset PWM {correctedPWM}')
+			self.pwm.ChangeDutyCycle(correctedPWM)
+			time.sleep(1)
+
+		self.pwm.stop()
+		"""
+
+		quit()
+
+	def update(self):
+		quit()
+
+if __name__ == '__main__':
+	app = QApplication(sys.argv)
+	gui = main()
+	sys.exit(app.exec_())
